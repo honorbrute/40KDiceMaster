@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>40k Dice Master</title>
+        <meta name="40k Dice Master">
+        <link rel="stylesheet" href="./index.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+
+    <body>
+        <h1 id="header">40k Dice Master</h1>
+        <div class="diceRoll">
+            <label class="numOfDice" for="diceCount">Number of Dice: </label>
+            <input type="number" id="diceCount">
+            <button class="roll" type="button" onclick="generateDice()">ROLL</button>
+            <button class="clear" type="button" onclick="clearDice()">CLEAR</button>
+        </div>
+        <div class="radio">
+            <form>
+                <input type="radio" id="hit" value="hit" name="hitorwounds">
+                <label for="hit">Hits</label>
+                <input type="radio" id="wounds" value="wounds" name="hitorwounds">
+                <label for="wounds">Wounds</label>
+            </form>
+        </div>
+        <section class="hwContainer">
+            <div class="diceSelectors">
+                <button class="selector hitSelector" id="hSel2">2+</button>
+                <button class="selector hitSelector" id="hSel3">3+</button>
+                <button class="selector hitSelector" id="hSel4">4+</button>
+                <button class="selector hitSelector" id="hSel5">5+</button>
+                <button class="selector hitSelector" id="hSel6">6+</button>
+                <p class="rolledDiceCount">= 3</p>
+            </div>
+            <section class="woundFromHitSection">
+                <div class="woundRoll">
+                    <button class="secondWounds" type="button">Roll for Wounds</button>
+                </div>
+                <div class="diceSelectors">
+                    <button class="selector woundSelector" id="wSel2">2+</button>
+                    <button class="selector woundSelector" id="wSel3">3+</button>
+                    <button class="selector woundSelector" id="wSel4">4+</button>
+                    <button class="selector woundSelector" id="wSel5">5+</button>
+                    <button class="selector woundSelector" id="wSel6">6+</button>
+                    <p class="rolledDiceCount">= 3</p>
+                </div>
+            </section>
+        </section>
+        <h2>Hit Rolls</h2>
+        <div class="diceContainer" id="diceHolder">
+        </div>
+        <script src="./index.js"></script>
+    </body>
+
+</html>

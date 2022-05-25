@@ -13,10 +13,6 @@ const selectorSize = 5;
 let hSelectors = document.getElementsByClassName("hitSelector");
 let wSelectors = document.getElementsByClassName("woundSelector");
 
-// DOM for radio button
-let hitRadio = document.getElementById("hit");
-let woundRadio = document.getElementById("wounds");
-
 // DiceCount for hits
 let hDiceCountID = document.getElementById("hDiceCount")
 
@@ -26,19 +22,6 @@ let rollForHitsID = document.getElementById("rollforhits");
 let diceArray = [];
 let newDiceArray = [];
 let hitRolls = 0;
-
-// if "Hits" radio is clicked, reveal wounds dice.
-hitRadio.addEventListener("click", function() {
-    document.getElementById("hitSelectorSection").style.display ="flex";
-    rollForWoundsID.style.display ="block";
-})
-
-// if "Wounds" radio is clicked, hide hits dice.
-woundRadio.addEventListener("click", function() {
-
-    document.getElementById("hitSelectorSection").style.display ="none";
-    rollForWoundsID.style.display ="none";
-})
 
 
 // Event listeners for "Hit" selectors

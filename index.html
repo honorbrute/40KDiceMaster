@@ -12,17 +12,9 @@
         <div class="diceRoll">
             <label class="numOfDice" for="diceCount">Number of Dice: </label>
             <input type="number" id="diceCount">
-            <button class="roll" type="button" id="rollforhits">ROLL</button>
             <button class="clear" type="button" onclick="clearDice()">CLEAR</button>
         </div>
-        <div class="radio">
-            <form>
-                <input type="radio" id="hit" value="hit" name="hitorwounds">
-                <label for="hit">Hits</label>
-                <input type="radio" id="wounds" value="wounds" name="hitorwounds">
-                <label for="wounds">Wounds</label>
-            </form>
-        </div>
+        <button class="rollButtons" type="button" id="rollforhits">Roll for Hits</button>
         <section class="hwContainer">
             <div class="diceSelectors" id="hitSelectorSection">
                 <button class="selector hitSelector" id="hSel2">2+</button>
@@ -34,7 +26,7 @@
             </div>
             <section class="woundFromHitSection" id="woundFromHitSectionid">
                 <div class="woundRoll">
-                    <button class="secondWounds" id="rollforwounds" type="button">Roll for Wounds</button>
+                    <button class="rollButtons" id="rollforwounds" type="button">Roll for Wounds</button>
                 </div>
                 <div class="diceSelectors">
                     <button class="selector woundSelector" id="wSel2">2+</button>

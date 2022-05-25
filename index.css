@@ -18,8 +18,10 @@ Typography
     font-size: 1.3rem;
 }
 
-form, .secondWounds {
+form, .rollButtons {
     font-size: 1.1rem;
+    margin-top: 50px;
+    margin: 80px 0 10px 0;
 }
 
 p {
@@ -31,8 +33,6 @@ p {
     font-size: 1.5rem
 }
 
-
-
 h1 {
     margin-bottom: 50px;
 }
@@ -43,7 +43,7 @@ h1 {
     margin-bottom: 20px;
 }
 
-.numOfDice, .roll, .clear {
+.numOfDice, .clear {
     margin-right: 10px;
 }
 
@@ -55,10 +55,6 @@ h1 {
 .radio {
     display: flex;
     margin-bottom: 0px;
-}
-
-.woundRoll {
-    margin: 80px 0 10px 0;
 }
 
 .diceSelectors {

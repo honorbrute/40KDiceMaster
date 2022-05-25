@@ -20,27 +20,32 @@ let woundRadio = document.getElementById("wounds");
 // DiceCount for hits
 let hDiceCountID = document.getElementById("hDiceCount")
 
+let rollForWoundsID = document.getElementById("rollforwounds");
+
 let diceArray = [];
+let newDiceArray = [];
+let hitRolls = 0;
 
 // if "Hits" radio is clicked, reveal wounds dice.
 hitRadio.addEventListener("click", function() {
     document.getElementById("hitSelectorSection").style.display ="flex";
-    document.getElementById("rollforwounds").style.display ="block";
+    rollForWoundsID.style.display ="block";
 })
 
 // if "Wounds" radio is clicked, hide hits dice.
 woundRadio.addEventListener("click", function() {
 
     document.getElementById("hitSelectorSection").style.display ="none";
-    document.getElementById("rollforwounds").style.display ="none";
+    rollForWoundsID.style.display ="none";
 })
+
 
 // Event listeners for "Hit" selectors
 for (let i = 0; i < selectorSize; i++) {
     hSelectors[i].addEventListener("click", function() {
         let currentHSel = document.getElementsByClassName("hSelected");
         let currentRolls = document.querySelectorAll(".rollSelected");
-        console.log(currentRolls.length)
+        // console.log(currentRolls.length)
         // Remove selected red functions
         if (currentHSel.length > 0) {
             currentHSel[0].classList.remove("hSelected")
@@ -52,14 +57,43 @@ for (let i = 0; i < selectorSize; i++) {
         let selectorString = this.innerHTML.split("+");
         const selectorValue = parseInt(selectorString[0], 10)
         selectDice(diceArray, selectorValue);
+        hitRolls = newDiceArray.length;
+        hDiceCountID.innerHTML = `= ${hitRolls} HITS`;
     })
+}
+
+// Event listeners for "Wound" selectors
+// for (let i = 0; i < selectorSize; i++) {
+//     wSelectors[i].addEventListener("click", function() {
+//         // console.log("wSelectors")
+//         let currentWSel = document.getElementsByClassName("wSelected");
+//         let currentRolls = document.querySelectorAll(".rollSelected");
+//         // console.log(currentRolls.length)
+//         // Remove selected red functions
+//         if (currentWSel.length > 0) {
+//             currentWSel[0].classList.remove("wSelected")
+//             for (let i =0; i < currentRolls.length; i++) {
+//                 currentRolls[i].classList.remove("rollSelected")
+//             }
+//         }
+//         this.classList.add("wSelected");
+//         let selectorString = this.innerHTML.split("+");
+//         const selectorValue = parseInt(selectorString[0], 10)
+//         selectDice(newDiceArray, selectorValue);
+//         console.log(newDiceArray);
+//     })
+// }
+
+rollForWoundsID.addEventListener("click", rollWounds);
+function rollWounds() {
+    generateDice();
 }
 
 // Select rolls based on selector
 // Paramaters = (array, int)
 // Return array of indexes that meet selector criteria.
 function selectDice(diceRolls, diceSelector) {
-    const newDiceArray = diceRolls.reduce(function(indexes, currentRoll, index) {
+    newDiceArray = diceRolls.reduce(function(indexes, currentRoll, index) {
         // console.log(`current roll: ${currentRoll}`);
         // console.log(`diceSelector: ${diceSelector}`);
         if (currentRoll >= diceSelector) {
@@ -72,14 +106,14 @@ function selectDice(diceRolls, diceSelector) {
     for (let i = 0; i < newDiceArray.length; i++) {
         $("div.dice").eq(newDiceArray[i])[0].classList.add("rollSelected");
     }
-    console.log(`newDiceArray: ${newDiceArray}`);
-    console.log(`diceRolls: ${diceRolls}`);
-    hDiceCountID.innerHTML = `= ${newDiceArray.length} HITS`;
+    // console.log(`newDiceArray: ${newDiceArray}`);
+    // console.log(`diceRolls: ${diceRolls}`);
 }
+
 
 // Generates X random dice from 1 to 6 when ROLL is clicked
 function generateDice() {
-    if (hitRadio.checked || woundRadio.checked) {
+    if ((hitRadio.checked || woundRadio.checked) && hitRolls === 0) {
         diceArray = [];
         const diceCount = document.getElementById("diceCount").value;
         //Array size of diceCount to hold dices.    
@@ -93,6 +127,16 @@ function generateDice() {
                 diceArray.push(dice);
             }
         diceContainer.innerHTML = diceDiv;
+    } else if (hitRolls > 0) {
+        let diceDiv = ""
+            for (let i = 0; i < hitRolls; i++) {
+                let dice = Math.floor(Math.random()*6)+1;
+                diceDiv +=
+                `<div class="dice">${dice}</div>`;
+                diceArray.push(dice);
+            }
+        diceContainer.innerHTML = diceDiv;
+
     } else {
         alert(`Must select "Hits" or "Wounds"`)
     }

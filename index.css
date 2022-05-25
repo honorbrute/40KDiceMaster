@@ -103,6 +103,6 @@ h1 {
 }
 
 /*Highlights which selector is selected*/
-.hSelected, .rollSelected {
+.hSelected, .wSelected, .rollSelected {
     border-color: red;
 }

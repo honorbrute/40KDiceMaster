@@ -32,6 +32,7 @@ woundRadio.addEventListener("click", function() {
     document.getElementById("rollforwounds").style.display ="none";
 })
 
+
 for (let i = 0; i < selectorSize; i++) {
     hSelectors[i].addEventListener("click", function() {
         let current = document.getElementsByClassName("selected");
@@ -72,19 +73,23 @@ function selectDice(diceRolls, diceSelector) {
 
 // Generates X random dice from 1 to 6 when ROLL is clicked
 function generateDice() {
-    diceArray = [];
-    const diceCount = document.getElementById("diceCount").value;
-    //Array size of diceCount to hold dices.    
-    //Need to create a forloop for diceCount? Use the forloop tocreate the div class into string.
+    if (hitRadio.checked || woundRadio.checked) {
+        diceArray = [];
+        const diceCount = document.getElementById("diceCount").value;
+        //Array size of diceCount to hold dices.    
+        //Need to create a forloop for diceCount? Use the forloop tocreate the div class into string.
 
-    let diceDiv = ""
-        for (let i = 0; i < diceCount; i++) {
-            let dice = Math.floor(Math.random()*6)+1;
-            diceDiv +=
-            `<div class="dice">${dice}</div>`;
-            diceArray.push(dice);
-        }
-    diceContainer.innerHTML = diceDiv;
+        let diceDiv = ""
+            for (let i = 0; i < diceCount; i++) {
+                let dice = Math.floor(Math.random()*6)+1;
+                diceDiv +=
+                `<div class="dice">${dice}</div>`;
+                diceArray.push(dice);
+            }
+        diceContainer.innerHTML = diceDiv;
+    } else {
+        alert(`Must select "Hits" or "Wounds"`)
+    }
 
 }
 

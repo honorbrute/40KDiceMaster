@@ -21,6 +21,7 @@ let woundRadio = document.getElementById("wounds");
 let hDiceCountID = document.getElementById("hDiceCount")
 
 let rollForWoundsID = document.getElementById("rollforwounds");
+let rollForHitsID = document.getElementById("rollforhits");
 
 let diceArray = [];
 let newDiceArray = [];
@@ -112,8 +113,9 @@ function selectDice(diceRolls, diceSelector) {
 
 
 // Generates X random dice from 1 to 6 when ROLL is clicked
+rollForHitsID.addEventListener("click", generateDice);
 function generateDice() {
-    if ((hitRadio.checked || woundRadio.checked) && hitRolls === 0) {
+    if (hitRolls === 0) {
         diceArray = [];
         const diceCount = document.getElementById("diceCount").value;
         //Array size of diceCount to hold dices.    
@@ -137,8 +139,6 @@ function generateDice() {
             }
         diceContainer.innerHTML = diceDiv;
 
-    } else {
-        alert(`Must select "Hits" or "Wounds"`)
     }
 
 }

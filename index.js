@@ -13,8 +13,24 @@ const selectorSize = 5;
 let hSelectors = document.getElementsByClassName("hitSelector");
 let wSelectors = document.getElementsByClassName("woundSelector");
 
+// DOM for radio button
+let hitRadio = document.getElementById("hit");
+let woundRadio = document.getElementById("wounds");
+
 let diceArray = [];
 
+// if "Hits" radio is clicked, reveal wounds dice.
+hitRadio.addEventListener("click", function() {
+    document.getElementById("hitSelectorSection").style.display ="flex";
+    document.getElementById("rollforwounds").style.display ="block";
+})
+
+// if "Wounds" radio is clicked, hide hits dice.
+woundRadio.addEventListener("click", function() {
+
+    document.getElementById("hitSelectorSection").style.display ="none";
+    document.getElementById("rollforwounds").style.display ="none";
+})
 
 for (let i = 0; i < selectorSize; i++) {
     hSelectors[i].addEventListener("click", function() {

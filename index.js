@@ -32,20 +32,20 @@ woundRadio.addEventListener("click", function() {
     document.getElementById("rollforwounds").style.display ="none";
 })
 
-
+// Event listeners for "Hit" selectors
 for (let i = 0; i < selectorSize; i++) {
     hSelectors[i].addEventListener("click", function() {
-        let current = document.getElementsByClassName("selected");
+        let currentHSel = document.getElementsByClassName("hSelected");
         let currentRolls = document.querySelectorAll(".rollSelected");
         console.log(currentRolls.length)
         // Remove selected red functions
-        if (current.length > 0) {
-            current[0].classList.remove("selected")
+        if (currentHSel.length > 0) {
+            currentHSel[0].classList.remove("hSelected")
             for (let i =0; i < currentRolls.length; i++) {
                 currentRolls[i].classList.remove("rollSelected")
             }
         }
-        this.classList.add("selected");
+        this.classList.add("hSelected");
         let selectorString = this.innerHTML.split("+");
         const selectorValue = parseInt(selectorString[0], 10)
         selectDice(diceArray, selectorValue);
@@ -69,6 +69,8 @@ function selectDice(diceRolls, diceSelector) {
     for (let i = 0; i < newDiceArray.length; i++) {
         $("div.dice").eq(newDiceArray[i])[0].classList.add("rollSelected");
     }
+    console.log(`newDiceArray: ${newDiceArray}`);
+    console.log(`diceRolls: ${diceRolls}`);
 }
 
 // Generates X random dice from 1 to 6 when ROLL is clicked

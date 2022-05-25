@@ -17,6 +17,9 @@ let wSelectors = document.getElementsByClassName("woundSelector");
 let hitRadio = document.getElementById("hit");
 let woundRadio = document.getElementById("wounds");
 
+// DiceCount for hits
+let hDiceCountID = document.getElementById("hDiceCount")
+
 let diceArray = [];
 
 // if "Hits" radio is clicked, reveal wounds dice.
@@ -71,6 +74,7 @@ function selectDice(diceRolls, diceSelector) {
     }
     console.log(`newDiceArray: ${newDiceArray}`);
     console.log(`diceRolls: ${diceRolls}`);
+    hDiceCountID.innerHTML = `= ${newDiceArray.length} HITS`;
 }
 
 // Generates X random dice from 1 to 6 when ROLL is clicked

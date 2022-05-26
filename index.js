@@ -13,8 +13,10 @@ const selectorSize = 5;
 let hSelectors = document.getElementsByClassName("hitSelector");
 let wSelectors = document.getElementsByClassName("woundSelector");
 
-// DiceCount for hits
+// DiceCount for hits and wounds DOM
 let hDiceCountID = document.getElementById("hDiceCount")
+let wDiceCountID = document.getElementById("wDiceCount")
+
 
 let rollForWoundsID = document.getElementById("rollforwounds");
 let rollForHitsID = document.getElementById("rollforhits");
@@ -47,26 +49,28 @@ for (let i = 0; i < selectorSize; i++) {
 }
 
 // Event listeners for "Wound" selectors
-// for (let i = 0; i < selectorSize; i++) {
-//     wSelectors[i].addEventListener("click", function() {
-//         // console.log("wSelectors")
-//         let currentWSel = document.getElementsByClassName("wSelected");
-//         let currentRolls = document.querySelectorAll(".rollSelected");
-//         // console.log(currentRolls.length)
-//         // Remove selected red functions
-//         if (currentWSel.length > 0) {
-//             currentWSel[0].classList.remove("wSelected")
-//             for (let i =0; i < currentRolls.length; i++) {
-//                 currentRolls[i].classList.remove("rollSelected")
-//             }
-//         }
-//         this.classList.add("wSelected");
-//         let selectorString = this.innerHTML.split("+");
-//         const selectorValue = parseInt(selectorString[0], 10)
-//         selectDice(newDiceArray, selectorValue);
-//         console.log(newDiceArray);
-//     })
-// }
+for (let i = 0; i < selectorSize; i++) {
+    wSelectors[i].addEventListener("click", function() {
+        console.log(`diceArray: ${diceArray}`)
+        let currentWSel = document.getElementsByClassName("wSelected");
+        let currentRolls = document.querySelectorAll(".rollSelected");
+        // console.log(currentRolls.length)
+        // Remove selected red functions
+        if (currentWSel.length > 0) {
+            currentWSel[0].classList.remove("wSelected")
+            for (let i =0; i < currentRolls.length; i++) {
+                currentRolls[i].classList.remove("rollSelected")
+            }
+        }
+        this.classList.add("wSelected");
+        let selectorString = this.innerHTML.split("+");
+        const selectorValue = parseInt(selectorString[0], 10)
+        selectDice(diceArray, selectorValue);
+        hitRolls = newDiceArray.length;
+        wDiceCountID.innerHTML = `= ${hitRolls} WOUNDS`;
+        
+    })
+}
 
 rollForWoundsID.addEventListener("click", rollWounds);
 function rollWounds() {
@@ -98,8 +102,8 @@ function selectDice(diceRolls, diceSelector) {
 // Generates X random dice from 1 to 6 when ROLL is clicked
 rollForHitsID.addEventListener("click", generateDice);
 function generateDice() {
+    diceArray = [];
     if (hitRolls === 0) {
-        diceArray = [];
         const diceCount = document.getElementById("diceCount").value;
         //Array size of diceCount to hold dices.    
         //Need to create a forloop for diceCount? Use the forloop tocreate the div class into string.

@@ -17,6 +17,8 @@ let wSelectors = document.getElementsByClassName("woundSelector");
 let hDiceCountID = document.getElementById("hDiceCount")
 let wDiceCountID = document.getElementById("wDiceCount")
 
+//Button DOM
+let clearID = document.getElementById("clearButton")
 
 let rollForWoundsID = document.getElementById("rollforwounds");
 let rollForHitsID = document.getElementById("rollforhits");
@@ -130,10 +132,27 @@ function generateDice() {
 
 }
 
+clearID.addEventListener("click", clearDice);
+
 function clearDice() {
+    let currentHSel = document.getElementsByClassName("hSelected");
+    let currentWSel = document.getElementsByClassName("wSelected");
+    if (currentHSel.length > 0) {
+        currentHSel[0].classList.remove("hSelected");
+    }
+    if (currentWSel.length > 0) {
+        currentWSel[0].classList.remove("wSelected")
+    }
+    
     document.getElementById("diceCount").value = '';
+    hDiceCountID.innerHTML = '= X HITS'
+    wDiceCountID.innerHTML = '= X WOUNDS'
     diceCount = 0;
     diceContainer.innerHTML = '';
+    diceArray = [];
+    newDiceArray = [];
+    hitRolls = 0;
 
+    
     //need to make a clear everything here
 }

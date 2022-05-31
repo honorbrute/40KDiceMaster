@@ -102,3 +102,7 @@ h1 {
 .hSelected, .wSelected, .rollSelected {
     border-color: red;
 }
+
+.clear, .rollButtons, .selector, .dice {
+    cursor: pointer;
+}

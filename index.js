@@ -74,6 +74,7 @@ for (let i = 0; i < selectorSize; i++) {
     })
 }
 
+// For auto hitters
 rollForWoundsID.addEventListener("click", rollWounds);
 function rollWounds() {
     generateDice();
@@ -105,8 +106,11 @@ function selectDice(diceRolls, diceSelector) {
 rollForHitsID.addEventListener("click", generateDice);
 function generateDice() {
     diceArray = [];
+    const diceCount = document.getElementById("diceCount").value;
+
+    // If no hit rolls were rolled previously
     if (hitRolls === 0) {
-        const diceCount = document.getElementById("diceCount").value;
+        console.log("Wound rolls generate dice")
         //Array size of diceCount to hold dices.    
         //Need to create a forloop for diceCount? Use the forloop tocreate the div class into string.
 
@@ -118,6 +122,8 @@ function generateDice() {
                 diceArray.push(dice);
             }
         diceContainer.innerHTML = diceDiv;
+        rollForHitsID.disabled = true;
+    // Rolling wound rolls based on number of hit rolls
     } else if (hitRolls > 0) {
         let diceDiv = ""
             for (let i = 0; i < hitRolls; i++) {
@@ -127,6 +133,8 @@ function generateDice() {
                 diceArray.push(dice);
             }
         diceContainer.innerHTML = diceDiv;
+        rollForWoundsID.disabled = true;
+        console.log("Hit rolls generate dice")
 
     }
 
@@ -152,6 +160,9 @@ function clearDice() {
     diceArray = [];
     newDiceArray = [];
     hitRolls = 0;
+
+    rollForHitsID.disabled = false;
+    rollForWoundsID.disabled = false;
 
     
     //need to make a clear everything here

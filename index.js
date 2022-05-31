@@ -110,7 +110,6 @@ function generateDice() {
 
     // If no hit rolls were rolled previously
     if (hitRolls === 0) {
-        console.log("Wound rolls generate dice")
         //Array size of diceCount to hold dices.    
         //Need to create a forloop for diceCount? Use the forloop tocreate the div class into string.
 
@@ -134,10 +133,14 @@ function generateDice() {
             }
         diceContainer.innerHTML = diceDiv;
         rollForWoundsID.disabled = true;
-        console.log("Hit rolls generate dice")
-
     }
 
+    // Rerolls when you click on a rolled dice at the bottom.
+    document.querySelectorAll(".dice").forEach(item => {
+        item.addEventListener("click", event => {
+          item.innerHTML = Math.floor(Math.random()*6)+1;
+        })
+      })
 }
 
 clearID.addEventListener("click", clearDice);

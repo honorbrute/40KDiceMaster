@@ -78,6 +78,7 @@ for (let i = 0; i < selectorSize; i++) {
 rollForWoundsID.addEventListener("click", rollWounds);
 function rollWounds() {
     generateDice();
+    rollForWoundsID.disabled = true;
 }
 
 // Select rolls based on selector
@@ -132,13 +133,19 @@ function generateDice() {
                 diceArray.push(dice);
             }
         diceContainer.innerHTML = diceDiv;
-        rollForWoundsID.disabled = true;
     }
 
     // Rerolls when you click on a rolled dice at the bottom.
+    // TODO: Need to update main array when dice is rerolled. Possibly with diceArray? accomplished
+    // TODO: Update selector count if rerolled meets threshold?
     document.querySelectorAll(".dice").forEach(item => {
         item.addEventListener("click", event => {
           item.innerHTML = Math.floor(Math.random()*6)+1;
+          let tempArray = [];
+          document.querySelectorAll(".dice").forEach(itemRoll => {
+              tempArray.push(itemRoll.innerHTML);
+          })
+          diceArray = tempArray;
         })
       })
 }
@@ -166,7 +173,4 @@ function clearDice() {
 
     rollForHitsID.disabled = false;
     rollForWoundsID.disabled = false;
-
-    
-    //need to make a clear everything here
 }

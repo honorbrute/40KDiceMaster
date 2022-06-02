@@ -26,6 +26,8 @@ let rollForHitsID = document.getElementById("rollforhits");
 let diceArray = [];
 let newDiceArray = [];
 let hitRolls = 0;
+let woundRolls = 0;
+let selectorValue = 0;
 
 
 // Event listeners for "Hit" selectors
@@ -43,7 +45,7 @@ for (let i = 0; i < selectorSize; i++) {
         }
         this.classList.add("hSelected");
         let selectorString = this.innerHTML.split("+");
-        const selectorValue = parseInt(selectorString[0], 10)
+        selectorValue = parseInt(selectorString[0], 10)
         selectDice(diceArray, selectorValue);
         hitRolls = newDiceArray.length;
         hDiceCountID.innerHTML = `= ${hitRolls} HITS`;
@@ -66,10 +68,10 @@ for (let i = 0; i < selectorSize; i++) {
         }
         this.classList.add("wSelected");
         let selectorString = this.innerHTML.split("+");
-        const selectorValue = parseInt(selectorString[0], 10)
+        selectorValue = parseInt(selectorString[0], 10)
         selectDice(diceArray, selectorValue);
-        hitRolls = newDiceArray.length;
-        wDiceCountID.innerHTML = `= ${hitRolls} WOUNDS`;
+        woundRolls = newDiceArray.length;
+        wDiceCountID.innerHTML = `= ${woundRolls} WOUNDS`;
         
     })
 }
@@ -86,8 +88,7 @@ function rollWounds() {
 // Return array of indexes that meet selector criteria.
 function selectDice(diceRolls, diceSelector) {
     newDiceArray = diceRolls.reduce(function(indexes, currentRoll, index) {
-        // console.log(`current roll: ${currentRoll}`);
-        // console.log(`diceSelector: ${diceSelector}`);
+        console.log(`newDiceArray: ${newDiceArray}`);
         if (currentRoll >= diceSelector) {
             indexes.push(index)
         }
@@ -142,9 +143,11 @@ function generateDice() {
         item.addEventListener("click", event => {
             // for loop?
             let timesRun = 0;
-            let interval = setInterval(async() => {
+            let interval = setInterval(function() {
                 timesRun += 1;
-                item.innerHTML = await Math.floor(Math.random()*6)+1;
+                item.innerHTML =Math.floor(Math.random()*6)+1;
+                // Reroll animation
+                // Update hit or wound count
                 if (timesRun === 10) {
                     clearInterval(interval)
                     let tempArray = [];
@@ -152,7 +155,19 @@ function generateDice() {
                         tempArray.push(itemRoll.innerHTML);
                     })
                     diceArray = tempArray;
-                    console.log(diceArray);
+                    // Hit reroll
+                    if (item.innerHTML >= selectorValue && rollForHitsID.disabled && !rollForWoundsID.disabled) {
+                        item.classList.add("rollSelected");
+                        hitRolls += 1;
+                        hDiceCountID.innerHTML = `= ${hitRolls} HITS`;
+
+                    } else if (item.innerHTML >= selectorValue
+                                && rollForHitsID.disabled
+                                && rollForWoundsID.disabled) {
+                        item.classList.add("rollSelected");
+                        woundRolls += 1;
+                        wDiceCountID.innerHTML = `= ${woundRolls} WOUNDS`;
+                    }
                 }
                 
             }, 20)

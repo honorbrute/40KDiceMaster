@@ -140,12 +140,30 @@ function generateDice() {
     // TODO: Update selector count if rerolled meets threshold?
     document.querySelectorAll(".dice").forEach(item => {
         item.addEventListener("click", event => {
-          item.innerHTML = Math.floor(Math.random()*6)+1;
-          let tempArray = [];
-          document.querySelectorAll(".dice").forEach(itemRoll => {
-              tempArray.push(itemRoll.innerHTML);
-          })
-          diceArray = tempArray;
+            // for loop?
+            let timesRun = 0;
+            let interval = setInterval(async() => {
+                timesRun += 1;
+                item.innerHTML = await Math.floor(Math.random()*6)+1;
+                if (timesRun === 10) {
+                    clearInterval(interval)
+                    let tempArray = [];
+                    document.querySelectorAll(".dice").forEach(itemRoll => {
+                        tempArray.push(itemRoll.innerHTML);
+                    })
+                    diceArray = tempArray;
+                    console.log(diceArray);
+                }
+                
+            }, 20)
+
+            // for (let i = 0; i < 10; i++) {
+            //     setTimeout(() => (item.innerHTML = Math.floor(Math.random()*6)+1), 1000);
+            //     console.log(i);
+            // }
+
+            // item.innerHTML = Math.floor(Math.random()*6)+1;
+
         })
       })
 }

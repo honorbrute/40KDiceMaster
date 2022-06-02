@@ -14,7 +14,10 @@
             <input type="number" id="diceCount">
             <button class="clear" id="clearButton" type="button">CLEAR</button>
         </div>
-        <button class="rollButtons" type="button" id="rollforhits">Roll for Hits</button>
+        <div class="hitRollContainer">
+            <button class="rollButtons" type="button" id="rollforhits">Roll for Hits</button>
+            <button class="rollButtons" type="button" id="rerollhitsID">Reroll 1s</button>
+        </div>
         <section class="hwContainer">
             <div class="diceSelectors" id="hitSelectorSection">
                 <button class="selector hitSelector" id="hSel2">2+</button>
@@ -25,8 +28,9 @@
                 <p class="rolledDiceCount" id="hDiceCount">= X HITS</p>
             </div>
             <section class="woundFromHitSection" id="woundFromHitSectionid">
-                <div class="woundRoll">
+                <div class="woundRollContainer">
                     <button class="rollButtons" id="rollforwounds" type="button">Roll for Wounds</button>
+                    <button class="rollButtons" id="rerollwoundsID" type="button">Reroll 1s</button>
                 </div>
                 <div class="diceSelectors">
                     <button class="selector woundSelector" id="wSel2">2+</button>

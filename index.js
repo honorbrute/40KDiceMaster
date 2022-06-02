@@ -25,8 +25,7 @@ let rollForHitsID = document.getElementById("rollforhits");
 
 let diceArray = [];
 let newDiceArray = [];
-let hitRolls = 0;
-let woundRolls = 0;
+let diceRolls = 0;
 let selectorValue = 0;
 
 createSelectors("wSelected", wSelectors)
@@ -54,10 +53,9 @@ function createSelectors(selectorClass, selectorslisteners) {
             let selectorString = this.innerHTML.split("+");
             selectorValue = parseInt(selectorString[0], 10)
             selectDice(diceArray, selectorValue);
-            woundRolls = newDiceArray.length;
-            hitRolls = newDiceArray.length;
-            selectorClass === "wSelected" ? wDiceCountID.innerHTML = `= ${woundRolls} WOUNDS`
-                : selectorClass === "hSelected" ? hDiceCountID.innerHTML = `= ${hitRolls} HITS`
+            diceRolls = newDiceArray.length;
+            selectorClass === "wSelected" ? wDiceCountID.innerHTML = `= ${diceRolls} WOUNDS`
+                : selectorClass === "hSelected" ? hDiceCountID.innerHTML = `= ${diceRolls} HITS`
                 : null;
             
         })
@@ -75,8 +73,8 @@ function rollWounds() {
 // Select rolls based on selector
 // Paramaters = (array, int)
 // Return array of indexes that meet selector criteria.
-function selectDice(diceRolls, diceSelector) {
-    newDiceArray = diceRolls.reduce(function(indexes, currentRoll, index) {
+function selectDice(diceRollsArray, diceSelector) {
+    newDiceArray = diceRollsArray.reduce(function(indexes, currentRoll, index) {
         if (currentRoll >= diceSelector) {
             indexes.push(index)
         }
@@ -88,8 +86,6 @@ function selectDice(diceRolls, diceSelector) {
     for (let i = 0; i < newDiceArray.length; i++) {
         $("div.dice").eq(newDiceArray[i])[0].classList.add("rollSelected");
     }
-    // console.log(`newDiceArray: ${newDiceArray}`);
-    // console.log(`diceRolls: ${diceRolls}`);
 }
 
 
@@ -100,7 +96,7 @@ function generateDice() {
     const diceCount = document.getElementById("diceCount").value;
 
     // If no hit rolls were rolled previously
-    if (hitRolls === 0) {
+    if (diceRolls === 0) {
         //Array size of diceCount to hold dices.    
         //Need to create a forloop for diceCount? Use the forloop tocreate the div class into string.
 
@@ -114,9 +110,9 @@ function generateDice() {
         diceContainer.innerHTML = diceDiv;
         rollForHitsID.disabled = true;
     // Rolling wound rolls based on number of hit rolls
-    } else if (hitRolls > 0) {
+    } else if (diceRolls > 0) {
         let diceDiv = ""
-            for (let i = 0; i < hitRolls; i++) {
+            for (let i = 0; i < diceRolls; i++) {
                 let dice = Math.floor(Math.random()*6)+1;
                 diceDiv +=
                 `<div class="dice">${dice}</div>`;
@@ -147,15 +143,15 @@ function generateDice() {
                     // Hit reroll
                     if (item.innerHTML >= selectorValue && rollForHitsID.disabled && !rollForWoundsID.disabled) {
                         item.classList.add("rollSelected");
-                        hitRolls += 1;
-                        hDiceCountID.innerHTML = `= ${hitRolls} HITS`;
+                        diceRolls += 1;
+                        hDiceCountID.innerHTML = `= ${diceRolls} HITS`;
 
                     } else if (item.innerHTML >= selectorValue
                                 && rollForHitsID.disabled
                                 && rollForWoundsID.disabled) {
                         item.classList.add("rollSelected");
-                        woundRolls += 1;
-                        wDiceCountID.innerHTML = `= ${woundRolls} WOUNDS`;
+                        diceRolls += 1;
+                        wDiceCountID.innerHTML = `= ${diceRolls} WOUNDS`;
                     }
                 }
                 
@@ -191,7 +187,7 @@ function clearDice() {
     diceContainer.innerHTML = '';
     diceArray = [];
     newDiceArray = [];
-    hitRolls = 0;
+    diceRolls = 0;
 
     rollForHitsID.disabled = false;
     rollForWoundsID.disabled = false;

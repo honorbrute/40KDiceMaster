@@ -24,6 +24,7 @@ let rollForWoundsID = document.getElementById("rollforwounds");
 let rollForHitsID = document.getElementById("rollforhits");
 
 let rerollHitsID = document.getElementById("rerollhitsID");
+let rerollWoundsID = document.getElementById("rerollwoundsID");
 
 let diceArray = [];
 let newDiceArray = [];
@@ -31,6 +32,7 @@ let diceRolls = 0;
 let selectorValue = 0;
 
 rerollHitsID.disabled = true;
+rerollWoundsID.disabled = true;
 
 createSelectors("wSelected", wSelectors)
 createSelectors("hSelected", hSelectors)
@@ -72,6 +74,8 @@ rollForWoundsID.addEventListener("click", rollWounds);
 function rollWounds() {
     generateDice();
     rollForWoundsID.disabled = true;
+    rerollWoundsID.disabled = false;
+    rerollHitsID.disabled = true;
 }
 
 // Select rolls based on selector
@@ -151,6 +155,16 @@ rerollHitsID.addEventListener("click", function() {
     rerollHitsID.disabled = true;
 })
 
+rerollWoundsID.addEventListener("click", function() {
+    document.querySelectorAll(".dice").forEach(diceEl => {
+        if (diceEl.innerHTML === "1") {
+            console.log("equals 1");
+            rerollDice(diceEl)
+        }
+    })
+    rerollWoundsID.disabled = true;
+})
+
 function rerollDice(diceElem) {
     let timesRun = 0;
     let interval = setInterval(function () {
@@ -209,4 +223,5 @@ function clearDice() {
     rollForHitsID.disabled = false;
     rollForWoundsID.disabled = false;
     rerollHitsID.disabled = true;
+    rerollWoundsID.disabled = true;
 }

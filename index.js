@@ -23,10 +23,14 @@ let clearID = document.getElementById("clearButton")
 let rollForWoundsID = document.getElementById("rollforwounds");
 let rollForHitsID = document.getElementById("rollforhits");
 
+let rerollHitsID = document.getElementById("rerollhitsID");
+
 let diceArray = [];
 let newDiceArray = [];
 let diceRolls = 0;
 let selectorValue = 0;
+
+rerollHitsID.disabled = true;
 
 createSelectors("wSelected", wSelectors)
 createSelectors("hSelected", hSelectors)
@@ -80,7 +84,6 @@ function selectDice(diceRollsArray, diceSelector) {
         }
         return indexes;
     }, []);
-    console.log(`newDiceArray: ${newDiceArray}`);
 
     //Need to make this into a function highlightRolls()? .eq(i) in a forloop
     for (let i = 0; i < newDiceArray.length; i++) {
@@ -90,7 +93,13 @@ function selectDice(diceRollsArray, diceSelector) {
 
 
 // Generates X random dice from 1 to 6 when ROLL is clicked
-rollForHitsID.addEventListener("click", generateDice);
+rollForHitsID.addEventListener("click", rollHits);
+
+function rollHits() {
+    generateDice();
+    rerollHitsID.disabled = false;
+}
+
 function generateDice() {
     diceArray = [];
     const diceCount = document.getElementById("diceCount").value;
@@ -140,6 +149,8 @@ function generateDice() {
                         tempArray.push(itemRoll.innerHTML);
                     })
                     diceArray = tempArray;
+                    diceArray = diceArray.map(diceNum => Number(diceNum))
+
                     // Hit reroll
                     if (item.innerHTML >= selectorValue && rollForHitsID.disabled && !rollForWoundsID.disabled) {
                         item.classList.add("rollSelected");
@@ -147,12 +158,12 @@ function generateDice() {
                         hDiceCountID.innerHTML = `= ${diceRolls} HITS`;
 
                     } else if (item.innerHTML >= selectorValue
-                                && rollForHitsID.disabled
-                                && rollForWoundsID.disabled) {
-                        item.classList.add("rollSelected");
-                        diceRolls += 1;
-                        wDiceCountID.innerHTML = `= ${diceRolls} WOUNDS`;
-                    }
+                        && rollForHitsID.disabled
+                        && rollForWoundsID.disabled) {
+                            item.classList.add("rollSelected");
+                            diceRolls += 1;
+                            wDiceCountID.innerHTML = `= ${diceRolls} WOUNDS`;
+                        }
                 }
                 
             }, 20)
@@ -167,6 +178,45 @@ function generateDice() {
         })
       })
 }
+
+rerollHitsID.addEventListener("click", function() {
+    document.querySelectorAll(".dice").forEach(item => {
+        if (item.innerHTML === "1") {
+            console.log("equals 1");
+            let timesRun = 0;
+            let interval = setInterval(function () {
+                timesRun += 1;
+                item.innerHTML = Math.floor(Math.random() * 6) + 1;
+                // Reroll animation
+                // Update hit or wound count
+                if (timesRun === 10) {
+                    clearInterval(interval)
+                    let tempArray = [];
+                    document.querySelectorAll(".dice").forEach(itemRoll => {
+                        tempArray.push(itemRoll.innerHTML);
+                    })
+                    diceArray = tempArray;
+                    diceArray = diceArray.map(diceNum => Number(diceNum))
+
+                    // Hit reroll
+                    if (item.innerHTML >= selectorValue && rollForHitsID.disabled && !rollForWoundsID.disabled) {
+                        item.classList.add("rollSelected");
+                        diceRolls += 1;
+                        hDiceCountID.innerHTML = `= ${diceRolls} HITS`;
+
+                    } else if (item.innerHTML >= selectorValue
+                        && rollForHitsID.disabled
+                        && rollForWoundsID.disabled) {
+                            item.classList.add("rollSelected");
+                            diceRolls += 1;
+                            wDiceCountID.innerHTML = `= ${diceRolls} WOUNDS`;
+                        }
+                }
+            }, 20)
+        }
+    })
+    rerollHitsID.disabled = true;
+})
 
 clearID.addEventListener("click", clearDice);
 
@@ -191,4 +241,5 @@ function clearDice() {
 
     rollForHitsID.disabled = false;
     rollForWoundsID.disabled = false;
+    rerollHitsID.disabled = true;
 }

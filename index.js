@@ -133,90 +133,57 @@ function generateDice() {
     // Rerolls when you click on a rolled dice at the bottom.
     // TODO: Need to update main array when dice is rerolled. Possibly with diceArray? accomplished
     // TODO: Update selector count if rerolled meets threshold?
-    document.querySelectorAll(".dice").forEach(item => {
-        item.addEventListener("click", event => {
+    document.querySelectorAll(".dice").forEach(diceEl => {
+        diceEl.addEventListener("click", event => {
             // for loop?
-            let timesRun = 0;
-            let interval = setInterval(function() {
-                timesRun += 1;
-                item.innerHTML =Math.floor(Math.random()*6)+1;
-                // Reroll animation
-                // Update hit or wound count
-                if (timesRun === 10) {
-                    clearInterval(interval)
-                    let tempArray = [];
-                    document.querySelectorAll(".dice").forEach(itemRoll => {
-                        tempArray.push(itemRoll.innerHTML);
-                    })
-                    diceArray = tempArray;
-                    diceArray = diceArray.map(diceNum => Number(diceNum))
-
-                    // Hit reroll
-                    if (item.innerHTML >= selectorValue && rollForHitsID.disabled && !rollForWoundsID.disabled) {
-                        item.classList.add("rollSelected");
-                        diceRolls += 1;
-                        hDiceCountID.innerHTML = `= ${diceRolls} HITS`;
-
-                    } else if (item.innerHTML >= selectorValue
-                        && rollForHitsID.disabled
-                        && rollForWoundsID.disabled) {
-                            item.classList.add("rollSelected");
-                            diceRolls += 1;
-                            wDiceCountID.innerHTML = `= ${diceRolls} WOUNDS`;
-                        }
-                }
-                
-            }, 20)
-
-            // for (let i = 0; i < 10; i++) {
-            //     setTimeout(() => (item.innerHTML = Math.floor(Math.random()*6)+1), 1000);
-            //     console.log(i);
-            // }
-
-            // item.innerHTML = Math.floor(Math.random()*6)+1;
-
+            rerollDice(diceEl);
         })
       })
 }
 
 rerollHitsID.addEventListener("click", function() {
-    document.querySelectorAll(".dice").forEach(item => {
-        if (item.innerHTML === "1") {
+    document.querySelectorAll(".dice").forEach(diceEl => {
+        if (diceEl.innerHTML === "1") {
             console.log("equals 1");
-            let timesRun = 0;
-            let interval = setInterval(function () {
-                timesRun += 1;
-                item.innerHTML = Math.floor(Math.random() * 6) + 1;
-                // Reroll animation
-                // Update hit or wound count
-                if (timesRun === 10) {
-                    clearInterval(interval)
-                    let tempArray = [];
-                    document.querySelectorAll(".dice").forEach(itemRoll => {
-                        tempArray.push(itemRoll.innerHTML);
-                    })
-                    diceArray = tempArray;
-                    diceArray = diceArray.map(diceNum => Number(diceNum))
-
-                    // Hit reroll
-                    if (item.innerHTML >= selectorValue && rollForHitsID.disabled && !rollForWoundsID.disabled) {
-                        item.classList.add("rollSelected");
-                        diceRolls += 1;
-                        hDiceCountID.innerHTML = `= ${diceRolls} HITS`;
-
-                    } else if (item.innerHTML >= selectorValue
-                        && rollForHitsID.disabled
-                        && rollForWoundsID.disabled) {
-                            item.classList.add("rollSelected");
-                            diceRolls += 1;
-                            wDiceCountID.innerHTML = `= ${diceRolls} WOUNDS`;
-                        }
-                }
-            }, 20)
+            rerollDice(diceEl)
         }
     })
     rerollHitsID.disabled = true;
 })
+
+function rerollDice(diceElem) {
+    let timesRun = 0;
+    let interval = setInterval(function () {
+        timesRun += 1;
+        diceElem.innerHTML = Math.floor(Math.random() * 6) + 1;
+        // Reroll animation
+        // Update hit or wound count
+        if (timesRun === 10) {
+            clearInterval(interval)
+            let tempArray = [];
+            document.querySelectorAll(".dice").forEach(itemRoll => {
+                tempArray.push(itemRoll.innerHTML);
+            })
+            diceArray = tempArray;
+            diceArray = diceArray.map(diceNum => Number(diceNum))
+
+            // Hit reroll
+            if (diceElem.innerHTML >= selectorValue && rollForHitsID.disabled && !rollForWoundsID.disabled) {
+                diceElem.classList.add("rollSelected");
+                diceRolls += 1;
+                hDiceCountID.innerHTML = `= ${diceRolls} HITS`;
+
+            } else if (diceElem.innerHTML >= selectorValue
+                && rollForHitsID.disabled
+                && rollForWoundsID.disabled) {
+                diceElem.classList.add("rollSelected");
+                diceRolls += 1;
+                wDiceCountID.innerHTML = `= ${diceRolls} WOUNDS`;
+            }
+        }
+    }, 20)
+
+}
 
 clearID.addEventListener("click", clearDice);
 

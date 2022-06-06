@@ -30,6 +30,9 @@ let diceArray = [];
 let newDiceArray = [];
 let diceRolls = 0;
 let selectorValue = 0;
+// Tracker for Reroll button.disabled
+let hRerollCount = 0;
+let wRerollCount = 0;
 
 rerollHitsID.disabled = true;
 rerollWoundsID.disabled = true;
@@ -60,9 +63,26 @@ function createSelectors(selectorClass, selectorslisteners) {
             selectorValue = parseInt(selectorString[0], 10)
             selectDice(diceArray, selectorValue);
             diceRolls = newDiceArray.length;
-            selectorClass === "wSelected" ? wDiceCountID.innerHTML = `= ${diceRolls} WOUNDS`
-                : selectorClass === "hSelected" ? hDiceCountID.innerHTML = `= ${diceRolls} HITS`
-                : null;
+            //Keep track of Wound number
+            if (selectorClass === "wSelected") {
+                wDiceCountID.innerHTML = `= ${diceRolls} WOUNDS`;
+                // Keep track of Reroll button.disabled
+                wRerollCount++;
+                if (wRerollCount === 1) {
+                    rerollWoundsID.disabled = false;
+                }
+            //Keep track of Hit number
+            } else if (selectorClass === "hSelected") {
+                hDiceCountID.innerHTML = `= ${diceRolls} HITS`;
+                // Keep track of Hit number
+                hRerollCount++;
+                if (hRerollCount === 1) {
+                    rerollHitsID.disabled = false;
+                }
+
+            }
+
+            
             
         })
     }
@@ -74,7 +94,6 @@ rollForWoundsID.addEventListener("click", rollWounds);
 function rollWounds() {
     generateDice();
     rollForWoundsID.disabled = true;
-    rerollWoundsID.disabled = false;
     rerollHitsID.disabled = true;
 }
 
@@ -101,7 +120,6 @@ rollForHitsID.addEventListener("click", rollHits);
 
 function rollHits() {
     generateDice();
-    rerollHitsID.disabled = false;
 }
 
 function generateDice() {
@@ -224,4 +242,6 @@ function clearDice() {
     rollForWoundsID.disabled = false;
     rerollHitsID.disabled = true;
     rerollWoundsID.disabled = true;
+    hRerollCount = 0;
+    wRerollCount = 0;
 }

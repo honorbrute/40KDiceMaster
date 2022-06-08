@@ -13,6 +13,7 @@ const selectorSize = 5;
 let hSelectors = document.getElementsByClassName("hitSelector");
 let wSelectors = document.getElementsByClassName("woundSelector");
 
+let diceCount = 0;
 // DiceCount for hits and wounds DOM
 let hDiceCountID = document.getElementById("hDiceCount")
 let wDiceCountID = document.getElementById("wDiceCount")
@@ -50,7 +51,6 @@ function createSelectors(selectorClass, selectorslisteners) {
         selectorslisteners[i].addEventListener("click", function() {
             let currentWSel = document.getElementsByClassName(selectorClass);
             let currentRolls = document.querySelectorAll(".rollSelected");
-            // console.log(currentRolls.length)
             // Remove selected red functions
             if (currentWSel.length > 0) {
                 currentWSel[0].classList.remove(selectorClass)
@@ -117,6 +117,13 @@ function selectDice(diceRollsArray, diceSelector) {
 
 // Generates X random dice from 1 to 6 when ROLL is clicked
 rollForHitsID.addEventListener("click", rollHits);
+let pressedEnter = false;
+document.getElementById("diceCount").addEventListener("keypress", function(event) {
+    if (event.key === "Enter" && pressedEnter === false) {
+        rollHits();
+        pressedEnter = true;
+    }
+})
 
 function rollHits() {
     generateDice();
@@ -124,7 +131,7 @@ function rollHits() {
 
 function generateDice() {
     diceArray = [];
-    const diceCount = document.getElementById("diceCount").value;
+    diceCount = document.getElementById("diceCount").value;
 
     // If no hit rolls were rolled previously
     if (diceRolls === 0) {
@@ -166,7 +173,6 @@ function generateDice() {
 rerollHitsID.addEventListener("click", function() {
     document.querySelectorAll(".dice").forEach(diceEl => {
         if (diceEl.innerHTML === "1") {
-            console.log("equals 1");
             rerollDice(diceEl)
         }
     })
@@ -176,7 +182,6 @@ rerollHitsID.addEventListener("click", function() {
 rerollWoundsID.addEventListener("click", function() {
     document.querySelectorAll(".dice").forEach(diceEl => {
         if (diceEl.innerHTML === "1") {
-            console.log("equals 1");
             rerollDice(diceEl)
         }
     })
@@ -242,6 +247,7 @@ function clearDice() {
     rollForWoundsID.disabled = false;
     rerollHitsID.disabled = true;
     rerollWoundsID.disabled = true;
+    pressedEnter = false;
     hRerollCount = 0;
     wRerollCount = 0;
 }
